@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://ressource/PlaneData.gd" type="Script" id=1]
+[ext_resource path="res://asset/sky/sky1.jpg" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+plane_image = ExtResource( 2 )
+plane_position = Vector2( 638, 201 )
+plane_speed = "150 km/h"
+plane_name = "nouvel_avion_15"

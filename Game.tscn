@@ -1,0 +1,160 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/ButtonValider.gd" type="Script" id=1]
+[ext_resource path="res://asset/PlaneImage/icon.png" type="Texture" id=2]
+[ext_resource path="res://asset/viewfinder/viseurtest.png" type="Texture" id=3]
+[ext_resource path="res://asset/sky/sky1.jpg" type="Texture" id=4]
+[ext_resource path="res://src/MovePlane.gd" type="Script" id=5]
+[ext_resource path="res://theme/BatleTheme.tres" type="Theme" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Button
+
+export(String) var path
+
+func is_pressed():
+	get_tree().call_group_flags(2,\"scene_manager\", \"switch_scene_with\", path)
+"
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 6 )
+
+[node name="Sky" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+stretch_mode = 7
+
+[node name="Margin" type="MarginContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.04
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="Target" type="TextureRect" parent="Margin"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 750.0
+margin_bottom = 550.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 6
+
+[node name="Plane" type="TextureRect" parent="Margin/Target" groups=["plane"]]
+show_behind_parent = true
+margin_left = 354.0
+margin_top = 247.0
+margin_right = 418.0
+margin_bottom = 311.0
+mouse_filter = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 7
+script = ExtResource( 5 )
+
+[node name="Response" type="Control" parent="Margin/Target" groups=["reponse"]]
+
+[node name="GUIBackground" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -224.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 130, 172 )
+color = Color( 0, 0, 0, 0.239216 )
+
+[node name="Margin" type="MarginContainer" parent="GUIBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 15
+custom_constants/margin_top = 15
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="GUIBackground/Margin"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 209.0
+margin_bottom = 585.0
+mouse_filter = 2
+
+[node name="PlaneImage" type="TextureRect" parent="GUIBackground/Margin/VBox"]
+margin_right = 194.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="SpeedInfo" type="Label" parent="GUIBackground/Margin/VBox"]
+margin_top = 104.0
+margin_right = 194.0
+margin_bottom = 124.0
+text = "150 km/h"
+align = 1
+
+[node name="ButtonValider" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 128.0
+margin_right = 194.0
+margin_bottom = 154.0
+text = "valider"
+script = ExtResource( 1 )
+nb_plane_to_do = 20
+
+[node name="HSeparator" type="HSeparator" parent="GUIBackground/Margin/VBox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 158.0
+margin_right = 194.0
+margin_bottom = 438.0
+size_flags_vertical = 3
+
+[node name="Turn" type="Label" parent="GUIBackground/Margin/VBox" groups=["tour_label"]]
+margin_top = 442.0
+margin_right = 194.0
+margin_bottom = 462.0
+text = "avion 17 / 20"
+align = 1
+valign = 1
+
+[node name="Score" type="Label" parent="GUIBackground/Margin/VBox" groups=["score_label"]]
+margin_top = 466.0
+margin_right = 194.0
+margin_bottom = 486.0
+text = "score : 538"
+align = 1
+valign = 1
+
+[node name="HightScore" type="Label" parent="GUIBackground/Margin/VBox" groups=["higth_score_label"]]
+margin_top = 490.0
+margin_right = 194.0
+margin_bottom = 510.0
+text = "record : 1832"
+align = 1
+valign = 1
+
+[node name="ButtonRestart" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 514.0
+margin_right = 194.0
+margin_bottom = 540.0
+text = "restart"
+
+[node name="ButtonMenu" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 544.0
+margin_right = 194.0
+margin_bottom = 570.0
+text = "menu"
+script = SubResource( 1 )
+path = "res://Menu.tscn"
+
+[connection signal="pressed" from="GUIBackground/Margin/VBox/ButtonValider" to="GUIBackground/Margin/VBox/ButtonValider" method="is_pressed"]
+[connection signal="pressed" from="GUIBackground/Margin/VBox/ButtonRestart" to="GUIBackground/Margin/VBox/ButtonValider" method="new_game"]
+[connection signal="pressed" from="GUIBackground/Margin/VBox/ButtonMenu" to="GUIBackground/Margin/VBox/ButtonMenu" method="is_pressed"]

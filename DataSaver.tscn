@@ -1,0 +1,183 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/MovePlane.gd" type="Script" id=1]
+[ext_resource path="res://src/saveNewPlaneData.gd" type="Script" id=2]
+[ext_resource path="res://asset/viewfinder/viseurtest.png" type="Texture" id=3]
+[ext_resource path="res://asset/PlaneImage/icon.png" type="Texture" id=4]
+[ext_resource path="res://asset/sky/sky1.jpg" type="Texture" id=5]
+[ext_resource path="res://src/popup.gd" type="Script" id=6]
+[ext_resource path="res://src/LoadPlaneData.gd" type="Script" id=7]
+[ext_resource path="res://src/SelectPlane.gd" type="Script" id=8]
+[ext_resource path="res://theme/DataSaverTheme.tres" type="Theme" id=9]
+[ext_resource path="res://src/loader_button.gd" type="Script" id=10]
+
+[node name="DataSaver" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 9 )
+
+[node name="Sky" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 5 )
+stretch_mode = 7
+
+[node name="Margin" type="MarginContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.04
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="Target" type="TextureRect" parent="Margin"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 750.0
+margin_bottom = 550.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 6
+
+[node name="Plane" type="TextureRect" parent="Margin/Target" groups=["plane"]]
+show_behind_parent = true
+margin_left = 833.0
+margin_top = 21.0
+margin_right = 897.0
+margin_bottom = 85.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 7
+script = ExtResource( 1 )
+
+[node name="GUIBackground" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -224.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 130, 172 )
+color = Color( 0, 0, 0, 0.239216 )
+
+[node name="Margin" type="MarginContainer" parent="GUIBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 15
+custom_constants/margin_top = 15
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="GUIBackground/Margin"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 209.0
+margin_bottom = 585.0
+mouse_filter = 2
+
+[node name="FileName" type="LineEdit" parent="GUIBackground/Margin/VBox"]
+margin_right = 194.0
+margin_bottom = 28.0
+align = 1
+placeholder_text = "nom du fichier"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="PlaneImage" type="TextureButton" parent="GUIBackground/Margin/VBox"]
+margin_top = 32.0
+margin_right = 194.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 100, 100 )
+texture_normal = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 8 )
+
+[node name="SpeedInfo" type="LineEdit" parent="GUIBackground/Margin/VBox"]
+margin_top = 136.0
+margin_right = 194.0
+margin_bottom = 164.0
+text = "150 km/h"
+align = 1
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="ButtonSave" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 168.0
+margin_right = 194.0
+margin_bottom = 192.0
+text = "sauvegarder"
+script = ExtResource( 2 )
+
+[node name="ButtonLoad" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 196.0
+margin_right = 194.0
+margin_bottom = 220.0
+text = "charger un avion"
+script = ExtResource( 7 )
+
+[node name="HSeparator" type="HSeparator" parent="GUIBackground/Margin/VBox"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 224.0
+margin_right = 194.0
+margin_bottom = 542.0
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="GUIBackground/Margin/VBox"]
+margin_top = 546.0
+margin_right = 194.0
+margin_bottom = 570.0
+text = "menu"
+script = ExtResource( 10 )
+path = "res://Menu.tscn"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 100
+custom_constants/margin_top = 50
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 50
+
+[node name="PopupPlaneImage" type="FileDialog" parent="MarginContainer" groups=["popup_plane_image"]]
+margin_left = 100.0
+margin_top = 50.0
+margin_right = 924.0
+margin_bottom = 550.0
+popup_exclusive = true
+window_title = "Ouvrir un fichier"
+dialog_hide_on_ok = true
+mode = 0
+filters = PoolStringArray( "*.jpg", "*.jpeg", "*.png" )
+current_dir = "res://asset/PlaneImage"
+current_file = "icon.png"
+current_path = "res://asset/PlaneImage/icon.png"
+script = ExtResource( 6 )
+
+[node name="PopupLoadPlane" type="FileDialog" parent="MarginContainer" groups=["popup_load_plane"]]
+margin_left = 100.0
+margin_top = 50.0
+margin_right = 924.0
+margin_bottom = 550.0
+popup_exclusive = true
+window_title = "Ouvrir un fichier"
+dialog_hide_on_ok = true
+mode = 0
+filters = PoolStringArray( "*.tres" )
+current_dir = "res://asset/PlaneData"
+current_path = "res://asset/PlaneData/"
+script = ExtResource( 6 )
+
+[connection signal="pressed" from="GUIBackground/Margin/VBox/ButtonSave" to="GUIBackground/Margin/VBox/ButtonSave" method="save_plane_data"]
+[connection signal="pressed" from="GUIBackground/Margin/VBox/Button" to="GUIBackground/Margin/VBox/Button" method="is_pressed"]
+[connection signal="about_to_show" from="MarginContainer/PopupPlaneImage" to="MarginContainer/PopupPlaneImage" method="stop"]
+[connection signal="popup_hide" from="MarginContainer/PopupPlaneImage" to="MarginContainer/PopupPlaneImage" method="ignore"]
+[connection signal="about_to_show" from="MarginContainer/PopupLoadPlane" to="MarginContainer/PopupLoadPlane" method="stop"]
+[connection signal="popup_hide" from="MarginContainer/PopupLoadPlane" to="MarginContainer/PopupLoadPlane" method="ignore"]

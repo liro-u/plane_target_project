@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://theme/basic_theme.tres" type="Theme" id=1]
+[ext_resource path="res://asset/font/1942.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/loader_button.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 35
+font_data = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 974.0
+margin_bottom = 550.0
+custom_constants/separation = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 924.0
+margin_bottom = 42.0
+
+[node name="back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 150.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 1 )
+text = "Retour"
+flat = true
+script = ExtResource( 3 )
+path = "res://Menu.tscn"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 924.0
+margin_bottom = 325.0
+custom_constants/vseparation = 70
+
+[node name="Dev" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+margin_right = 924.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+text = "Noailles Valentin   Liro_u   Developer"
+align = 1
+valign = 1
+
+[node name="Font1" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 101.0
+margin_right = 924.0
+margin_bottom = 132.0
+size_flags_horizontal = 3
+text = "Johan Holmdahl   1942 report   Font"
+align = 1
+valign = 1
+
+[node name="Font2" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+margin_top = 202.0
+margin_right = 924.0
+margin_bottom = 233.0
+size_flags_horizontal = 3
+text = "Koczman Bálint   old stamper   Font"
+align = 1
+valign = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/back" to="MarginContainer/VBoxContainer/HBoxContainer/back" method="is_pressed"]
